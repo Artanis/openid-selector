@@ -8,7 +8,7 @@ This code is licenced under the New BSD License.
 var providers_large = {
     google: {
         name: 'Google',
-        url: 'https://www.google.com/accounts/o8/id',
+        url: 'https://www.google.com/accounts/o8/id'
     },
     yahoo: {
         name: 'Yahoo',      
@@ -17,12 +17,12 @@ var providers_large = {
     aol: {
         name: 'AOL',     
         label: 'Enter your AOL screenname.',
-        url: 'http://openid.aol.com/{username}/',
+        url: 'http://openid.aol.com/{username}/'
     },
     openid: {
         name: 'OpenID',     
         label: 'Enter your OpenID.',
-        url: null,
+        url: null
     }
 };
 var providers_small = {
@@ -39,42 +39,42 @@ var providers_small = {
     flickr: {
         name: 'Flickr',        
         label: 'Enter your Flickr username.',
-        url: 'http://flickr.com/{username}/',
+        url: 'http://flickr.com/{username}/'
     },
     technorati: {
         name: 'Technorati',
         label: 'Enter your Technorati username.',
-        url: 'http://technorati.com/people/technorati/{username}/',
+        url: 'http://technorati.com/people/technorati/{username}/'
     },
     wordpress: {
         name: 'Wordpress',
         label: 'Enter your Wordpress.com username.',
-        url: 'http://{username}.wordpress.com/',
+        url: 'http://{username}.wordpress.com/'
     },
     blogger: {
         name: 'Blogger',
         label: 'Your Blogger account',
-        url: 'http://{username}.blogspot.com/',
+        url: 'http://{username}.blogspot.com/'
     },
     verisign: {
         name: 'Verisign',
         label: 'Your Verisign username',
-        url: 'http://{username}.pip.verisignlabs.com/',
+        url: 'http://{username}.pip.verisignlabs.com/'
     },
     vidoop: {
         name: 'Vidoop',
         label: 'Your Vidoop username',
-        url: 'http://{username}.myvidoop.com/',
+        url: 'http://{username}.myvidoop.com/'
     },
     verisign: {
         name: 'Verisign',
         label: 'Your Verisign username',
-        url: 'http://{username}.pip.verisignlabs.com/',
+        url: 'http://{username}.pip.verisignlabs.com/'
     },
     claimid: {
         name: 'ClaimID',
         label: 'Your ClaimID username',
-        url: 'http://claimid.com/{username}',
+        url: 'http://claimid.com/{username}'
     }
 };
 var providers = $.extend({}, providers_large, providers_small);
