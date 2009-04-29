@@ -19,6 +19,11 @@ var providers_large = {
         label: 'Enter your AOL screenname.',
         url: 'http://openid.aol.com/{username}'
     },
+    verisign: {
+        name: 'Verisign',
+        label: 'Your Verisign username',
+        url: 'http://{username}.pip.verisignlabs.com/'
+    },
     openid: {
         name: 'OpenID',     
         label: 'Enter your OpenID.',
@@ -55,11 +60,6 @@ var providers_small = {
         name: 'Blogger',
         label: 'Your Blogger account',
         url: 'http://{username}.blogspot.com/'
-    },
-    verisign: {
-        name: 'Verisign',
-        label: 'Your Verisign username',
-        url: 'http://{username}.pip.verisignlabs.com/'
     },
     vidoop: {
         name: 'Vidoop',
