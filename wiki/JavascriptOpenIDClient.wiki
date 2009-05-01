@@ -73,3 +73,8 @@ Google entering credentials. What's important is that if the user sees Google's 
 visually check whether they're really at Google's site not at a phishing site.
 
 So, we can't use a "lightbox" or anything else pretty like that. An ugly popup with a URL bar is required.
+
+= References =
+
+Bits of ideas shamelessly stolen from: 
+http://www.sociallipstick.com/2009/02/04/how-to-accept-openid-in-a-popup-without-leaving-the-page/
