@@ -1,0 +1,75 @@
+#summary Proposal for a separate Javascript file which will perform authentication from the browser.
+
+= Introduction =
+
+The OpenID Selector component allows the user to pick an OpenID URL without having to really know anything about OpenID. The 
+
+purpose of this document is to propose that the scope of the project is widened to include a separate module which will perform 
+
+the actual OpenID login process in the user's browser using Javascript.
+
+The aim is to build something that closely resembles the Facebook Connect workflow. Once completed, a developer will be able to 
+
+write a site completely in Javascript with no server-side and can expect a user to login using OpenID. By combining OAUTH into 
+
+the solution, the developer will be able to create client-only mashups capable of authenticating with OpenID and providing 
+
+multiple services on one page.
+
+= Immediate mode and an iframe =
+
+When a user selects a provider to login, the first thing that the Javascript library should do is:
+  * Dynamically create an iframe with the src of the OpenID provider (e.g. Google) and query parameters to indicate what is being 
+
+asserted (the openid parameters).
+    * The return_to URL will be specified as a static page on the RP's site. This page will contain Javascript...
+    * Later on, the library will also be able to add parameters to ask for attribute exchange (AX) and other features. In this 
+
+phase, we'll just handle basic logon.
+
+  * The iframe will query the provider with an checkid_immediate request to see whether the user can be authenticated without 
+
+having to enter any details whatsoever.
+    * The OpenID Provider will redirect back to the RP's site with query parameters asserting a success or a failure.
+
+  * The RP's static page is now in the iframe and has details of whether the assertion was confirmed. It uses Javascript to make 
+
+a call to the parent frame and passes through all the parameters it received from the OP. Javascript has access to the query 
+
+parameters on the incoming URL.
+
+  * The RP's main page can now validate the parameters and indicate success to the user.
+
+  * If the assertion failed, we optionally move onto the next step which involves a popup window.
+
+== Security concerns ==
+
+All the validation of OpenID response values must take place in the main frame not within Javascript on the iframe as part of the 
+
+return_to page. We can trust return page within the iframe to some extent. If a malicious OP redirected to a different page than 
+
+the one we specified then it won't be allowed to communicate with our main frame due to XSS issues. However, we should minimise 
+
+any risk introduced if a malicious OpenID provider has hacked into a less secure part of the domain and posted up an alternative 
+
+receiver page.
+
+= Normal (setup) mode and a popup window =
+
+If the checkid_immediate has failed, the code will remove the iframe and will open a popup window using the user_setup_url 
+
+parameter returned by the OP specifying where the user can be directed to in order to complete the authentication.
+
+The return_to parameter will be set to the same (or similar) RP page which received the checkid_immediate response. Again, it's job is to communicate the OP's response parameters back to the main frame.
+
+== Important Security issue ==
+
+The popup window must contain a URL bar showing the user which site they're actually typing their credentials into. Websites are 
+
+allowed to delegate their OpenID logins to another site so a user logging in as http://dave.testabc.com could genuinely end up at 
+
+Google entering credentials. What's important is that if the user sees Google's login screen, they have a URL available to 
+
+visually check whether they're really at Google's site not at a phishing site.
+
+So, we can't use a "lightbox" or anything else pretty like that. An ugly popup with a URL bar is required.
