@@ -74,7 +74,12 @@ visually check whether they're really at Google's site not at a phishing site.
 
 So, we can't use a "lightbox" or anything else pretty like that. An ugly popup with a URL bar is required.
 
+= The return_to page =
+
+With client-only authentication, we're going to need to round trip to the OP on each and every page load. Therefore, anything we can do to reduce the number of HTTP requests in the process will improve the pages considerably. In the return_to page, if we allow the OP to pass the response parameters back as ? query params then the browser will be prompted to re-fetch the return_to page from the server even though it's static HTML. The browser doesn't know that it's static HTML, of course. The way around this is to put a # at the end of the return_to URL so that when the OP adds its parameters it's adding them to the fragment. The javascript on the return_to page can read these just fine but the browser will think that the page doesn't need reloading. We've thereby saved an HTTP fetch of the return_to page. It's fetched the first time but cached thereafter.
+
 = References =
 
-Bits of ideas shamelessly stolen from: 
+  * Bits of ideas shamelessly stolen from: 
 http://www.sociallipstick.com/2009/02/04/how-to-accept-openid-in-a-popup-without-leaving-the-page/
+  * Referenced code at http://openid-demo.appspot.com/
