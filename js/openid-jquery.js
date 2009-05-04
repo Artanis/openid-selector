@@ -77,6 +77,7 @@ var providers = $.extend({}, providers_large, providers_small);
 var openid = {
 
 	demo: false,
+	ajaxHandler: null,
 	cookie_expires: 6*30,	// 6 months.
 	cookie_name: 'openid_provider',
 	cookie_path: '/',
@@ -85,6 +86,7 @@ var openid = {
 	
 	input_id: null,
 	provider_url: null,
+	provider_id: null,
 	
     init: function(input_id) {
         
@@ -135,6 +137,7 @@ var openid = {
 		this.highlight(box_id);
 		this.setCookie(box_id);
 		
+		this.provider_id = box_id;
 		this.provider_url = provider['url'];
 		
 		// prompt user for input?
@@ -154,6 +157,10 @@ var openid = {
     	if (url) {
     		url = url.replace('{username}', $('#openid_username').val());
     		openid.setOpenIdUrl(url);
+    	}
+    	if(openid.ajaxHandler) {
+    		openid.ajaxHandler(openid.provider_id, document.getElementById(openid.input_id).value);
+    		return false;
     	}
     	if(openid.demo) {
     		alert("In client demo mode. Normally would have submitted OpenID:\r\n" + document.getElementById(openid.input_id).value);
@@ -226,5 +233,8 @@ var openid = {
     },
     setDemoMode: function (demoMode) {
     	this.demo = demoMode;
+    },
+    setAjaxHandler: function (ajaxFunction) {
+    	this.ajaxHandler = ajaxFunction;
     }
 };
