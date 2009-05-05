@@ -1,0 +1,25 @@
+#summary Storing details in a cookie to maintain login while navigating between pages
+
+= Authenticate every page =
+
+It is most appropriate when using client-only javascript OpenID to authenticate on every page with a checkid_immediate request. Between page navigations, we therefore only need to maintain the following settings:
+  * Provider ID - (e.g. verisign) Will let us map to the auth endpoint
+  * Claimed ID - (e.g. http://abc.pip.verisignlabs.com)
+
+We need the Claimed ID even for providers like Google and Yahoo that support ID selection. If we set the Claimed ID to http://specs.openid.net/auth/2.0/identifier_select and the user had multiple logins available, the user would be prompted to pick an identity every time they navigated between pages.
+
+Sites that are using client-only javascript OpenID are likely to be using AJAX pretty heavily and therefore the overhead of authenticating when moving between pages is minimised.
+
+= Page load workflow =
+
+Initially, the OpenID selector component should be invisible.
+
+  * Check for cookie
+    * Cookie is missing --> Show OpenID selector. *END*.
+    * Cookie is present. Use checkid_immediate to authenticate, supplying the Claimed ID.
+      * checkid_immediate succeeds. Show "logged in as xxx. Click here to logout" in place of the OpenID selector. *END*.
+      * checkid_immediate fails. User must have been logged out somewhere else. --> Use checkid_setup.
+        * checkid_setup succeeds. Show "logged in as xxx. Click here to logout" in place of the OpenID selector. *END*.
+        * checkid_setup fails --> Show OpenID selector. *END*.
+
+Clicking the "logout" link clears down the cookie and displays the OpenID selector. It also calls a handler which the website developer can specify a function for.
