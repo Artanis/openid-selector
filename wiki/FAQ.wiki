@@ -1,4 +1,4 @@
 #summary Frequently Asked Questions
 
   * Is Facebook missing from the list?
-    * Facebook is not currently operating as an OpenID Provider, it's not possible to use Facebook credentials to log into other websites. They're not advertising well how they're operating as an Relying Party either, it's not obvious how to use other credentials to log into Facebook.
+    * Facebook is not currently operating as an OpenID Provider, it's not possible to use Facebook credentials to log into other websites. They're not advertising well how they're operating as an Relying Party either, it's not obvious how to use other credentials to log into Facebook. They've gone with a "linked accounts" approach where you declare which Google (for example) account you're using then if you hit facebook.com while logged into the account you automatically get logged into Facebook.
