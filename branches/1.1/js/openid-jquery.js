@@ -75,6 +75,11 @@ var providers_small = {
         name: 'ClaimID',
         label: 'Your ClaimID username',
         url: 'http://claimid.com/{username}'
+    },
+    google_profile: {
+      name: 'Google_Profile',
+      label: 'Enter your Google Profile username',
+      url: 'http://www.google.com/profiles/{username}'
     }
 };
 var providers = $.extend({}, providers_large, providers_small);
