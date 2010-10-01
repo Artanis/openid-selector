@@ -16,7 +16,7 @@ var providers_large = {
     },
     myopenid: {
       name: 'MyOpenID',
-      label: 'Введите ваше MyOpenID имя.',
+      label: 'Введите ваше MyOpenID имя пользователя.',
       url: 'http://{username}.myopenid.com/'
     },
     aol: {
@@ -33,22 +33,22 @@ var providers_large = {
 var providers_small = {
     livejournal: {
         name: 'Живой Журнал',
-        label: 'Введите ваше Livejournal username.',
+        label: 'Введите ваше имя в Живом Журнале.',
         url: 'http://{username}.livejournal.com/'
     },
     /* flickr: {
         name: 'Flickr',        
-        label: 'Введите ваше Flickr username.',
+        label: 'Введите ваше имя на Flickr.',
         url: 'http://flickr.com/{username}/'
     }, */
     /* technorati: {
         name: 'Technorati',
-        label: 'Введите ваше Technorati username.',
+        label: 'Введите ваше имя на Technorati.',
         url: 'http://technorati.com/people/technorati/{username}/'
     }, */
     wordpress: {
         name: 'Wordpress',
-        label: 'Введите ваше Wordpress.com username.',
+        label: 'Введите ваше имя на Wordpress.com.',
         url: 'http://{username}.wordpress.com/'
     },
     blogger: {
@@ -58,32 +58,32 @@ var providers_small = {
     },
     verisign: {
       name: 'Verisign',
-      label: 'Ваше Verisign username',
+      label: 'Ваше Verisign имя пользователя',
       url: 'http://{username}.pip.verisignlabs.com/'
     },
     /* vidoop: {
         name: 'Vidoop',
-        label: 'Ваше Vidoop username',
+        label: 'Ваше Vidoop имя пользователя',
         url: 'http://{username}.myvidoop.com/'
     }, */
     /* launchpad: {
         name: 'Launchpad',
-        label: 'Ваше Launchpad username',
+        label: 'Ваше Launchpad имя пользователя',
         url: 'https://launchpad.net/~{username}'
     }, */
     claimid: {
         name: 'ClaimID',
-        label: 'Ваше ClaimID username',
+        label: 'Ваше ClaimID имя пользователя',
         url: 'http://claimid.com/{username}'
     },
     clickpass: {
       name: 'ClickPass',
-      label: 'Введите ваше ClickPass username',
+      label: 'Введите ваше имя на ClickPass',
       url: 'http://clickpass.com/public/{username}'
     },
     google_profile: {
       name: 'Профиль Google',
-      label: 'Введите ваше Google Profile username',
+      label: 'Введите ваше имя на Google Profile',
       url: 'http://www.google.com/profiles/{username}'
     }
 };
