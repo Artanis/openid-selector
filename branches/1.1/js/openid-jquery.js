@@ -13,16 +13,16 @@ var providers_large = {
     yahoo: {
         name: 'Yahoo',      
         url: 'http://me.yahoo.com/'
-    },    
+    },
+    myopenid: {
+      name: 'MyOpenID',
+      label: 'Enter your MyOpenID username.',
+      url: 'http://{username}.myopenid.com/'
+    },
     aol: {
         name: 'AOL',     
         label: 'Enter your AOL screenname.',
         url: 'http://openid.aol.com/{username}'
-    },
-    verisign: {
-        name: 'Verisign',
-        label: 'Your Verisign username',
-        url: 'http://{username}.pip.verisignlabs.com/'
     },
     openid: {
         name: 'OpenID',     
@@ -31,10 +31,10 @@ var providers_large = {
     }
 };
 var providers_small = {
-    myopenid: {
-        name: 'MyOpenID',
-        label: 'Enter your MyOpenID username.',
-        url: 'http://{username}.myopenid.com/'
+    verisign: {
+      name: 'Verisign',
+      label: 'Your Verisign username',
+      url: 'http://{username}.pip.verisignlabs.com/'
     },
     livejournal: {
         name: 'LiveJournal',
