@@ -66,6 +66,11 @@ var providers_small = {
         label: 'Your Vidoop username',
         url: 'http://{username}.myvidoop.com/'
     },
+    launchpad: {
+        name: 'Launchpad',
+        label: 'Your Launchpad username',
+        url: 'https://launchpad.net/~{username}'
+    },
     claimid: {
         name: 'ClaimID',
         label: 'Your ClaimID username',
