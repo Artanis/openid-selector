@@ -66,10 +66,10 @@ var providers_small = {
         label: 'Your Vidoop username',
         url: 'http://{username}.myvidoop.com/'
     },
-    verisign: {
-        name: 'Verisign',
-        label: 'Your Verisign username',
-        url: 'http://{username}.pip.verisignlabs.com/'
+    launchpad: {
+        name: 'Launchpad',
+        label: 'Your Launchpad username',
+        url: 'https://launchpad.net/~{username}'
     },
     claimid: {
         name: 'ClaimID',
