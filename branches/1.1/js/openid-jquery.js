@@ -5,104 +5,25 @@ http://code.google.com/p/openid-selector/
 This code is licenced under the New BSD License.
 */
 
-var providers_large = {
-    google: {
-        name: 'Google',
-        url: 'https://www.google.com/accounts/o8/id'
-    },
-    yahoo: {
-        name: 'Yahoo',      
-        url: 'http://me.yahoo.com/'
-    },
-    myopenid: {
-      name: 'MyOpenID',
-      label: 'Enter your MyOpenID username.',
-      url: 'http://{username}.myopenid.com/'
-    },
-    aol: {
-        name: 'AOL',     
-        label: 'Enter your AOL screenname.',
-        url: 'http://openid.aol.com/{username}'
-    },
-    openid: {
-        name: 'OpenID',     
-        label: 'Enter your OpenID.',
-        url: null
-    }
-};
-var providers_small = {
-    livejournal: {
-        name: 'LiveJournal',
-        label: 'Enter your Livejournal username.',
-        url: 'http://{username}.livejournal.com/'
-    },
-    /* flickr: {
-        name: 'Flickr',        
-        label: 'Enter your Flickr username.',
-        url: 'http://flickr.com/{username}/'
-    }, */
-    /* technorati: {
-        name: 'Technorati',
-        label: 'Enter your Technorati username.',
-        url: 'http://technorati.com/people/technorati/{username}/'
-    }, */
-    wordpress: {
-        name: 'Wordpress',
-        label: 'Enter your Wordpress.com username.',
-        url: 'http://{username}.wordpress.com/'
-    },
-    blogger: {
-        name: 'Blogger',
-        label: 'Your Blogger account',
-        url: 'http://{username}.blogspot.com/'
-    },
-    verisign: {
-      name: 'Verisign',
-      label: 'Your Verisign username',
-      url: 'http://{username}.pip.verisignlabs.com/'
-    },
-    /* vidoop: {
-        name: 'Vidoop',
-        label: 'Your Vidoop username',
-        url: 'http://{username}.myvidoop.com/'
-    }, */
-    /* launchpad: {
-        name: 'Launchpad',
-        label: 'Your Launchpad username',
-        url: 'https://launchpad.net/~{username}'
-    }, */
-    claimid: {
-        name: 'ClaimID',
-        label: 'Your ClaimID username',
-        url: 'http://claimid.com/{username}'
-    },
-    clickpass: {
-      name: 'ClickPass',
-      label: 'Enter your ClickPass username',
-      url: 'http://clickpass.com/public/{username}'
-    },
-    google_profile: {
-      name: 'Google_Profile',
-      label: 'Enter your Google Profile username',
-      url: 'http://www.google.com/profiles/{username}'
-    }
-};
-var providers = $.extend({}, providers_large, providers_small);
+var providers;
 
 var openid = {
 
 	demo: false,
+	demo_text: 'In client demo mode. Normally would have submitted OpenID:',
 	cookie_expires: 6*30,	// 6 months.
 	cookie_name: 'openid_provider',
 	cookie_path: '/',
 	
 	img_path: 'images/',
 	
+	signin_text: 'Sign-In',
 	input_id: null,
 	provider_url: null,
 	provider_id: null,
 	
     init: function(input_id) {
+        providers = $.extend({}, providers_large, providers_small);
         
         var openid_btns = $('#openid_btns');
         
@@ -114,14 +35,14 @@ var openid = {
         // add box for each provider
         for (id in providers_large) {
         
-           	openid_btns.append(this.getBoxHTML(providers_large[id], 'large', '.gif'));
+           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', '.gif'));
         }
         if (providers_small) {
         	openid_btns.append('<br/>');
         	
 	        for (id in providers_small) {
 	        
-	           	openid_btns.append(this.getBoxHTML(providers_small[id], 'small', '.ico.gif'));
+	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', '.ico.gif'));
 	        }
         }
         
@@ -132,9 +53,8 @@ var openid = {
         	this.signin(box_id, true);
         }  
     },
-    getBoxHTML: function(provider, box_size, image_ext) {
+    getBoxHTML: function(box_id, provider, box_size, image_ext) {
             
-        var box_id = provider["name"].toLowerCase();
         return '<a title="'+provider["name"]+'" href="javascript: openid.signin(\''+ box_id +'\');"' +
         		' style="background: #FFF url(' + this.img_path + box_id + image_ext+') no-repeat center center" ' + 
         		'class="' + box_id + ' openid_' + box_size + '_btn"></a>';    
@@ -173,7 +93,7 @@ var openid = {
     		openid.setOpenIdUrl(url);
     	}
     	if(openid.demo) {
-    		alert("In client demo mode. Normally would have submitted OpenID:\r\n" + document.getElementById(openid.input_id).value);
+    		alert(openid.demo_text + "\r\n" + document.getElementById(openid.input_id).value);
     		return false;
     	}
     	return true;
@@ -234,7 +154,7 @@ var openid = {
 			style = 'background:#FFF url('+this.img_path+'openid-inputicon.gif) no-repeat scroll 0 50%; padding-left:18px;';
 		}
 		html += '<input id="'+id+'" type="text" style="'+style+'" name="'+id+'" value="'+value+'" />' + 
-					'<input id="openid_submit" type="submit" value="Sign-In"/>';
+					'<input id="openid_submit" type="submit" value="'+this.signin_text+'"/>';
 		
 		input_area.empty();
 		input_area.append(html);
