@@ -19,10 +19,9 @@ var providers_large = {
       label: 'Введите ваше MyOpenID имя пользователя.',
       url: 'http://{username}.myopenid.com/'
     },
-    aol: {
-        name: 'AOL',     
-        label: 'Введите ваше AOL screenname.',
-        url: 'http://openid.aol.com/{username}'
+    yandex: {
+        name: 'Яндекс',
+        url: 'http://openid.yandex.ru'
     },
     openid: {
         name: 'OpenID',     
