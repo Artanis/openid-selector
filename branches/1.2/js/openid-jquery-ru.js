@@ -10,6 +10,10 @@ var providers_large = {
         name: 'Google',
         url: 'https://www.google.com/accounts/o8/id'
     },
+    rambler: {
+      name: 'Рамблер',      
+      url: 'http://www.rambler.ru'
+    },
     yahoo: {
         name: 'Yahoo',      
         url: 'http://me.yahoo.com/'
