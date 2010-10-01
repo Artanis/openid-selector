@@ -76,6 +76,11 @@ var providers_small = {
         label: 'Your ClaimID username',
         url: 'http://claimid.com/{username}'
     },
+    clickpass: {
+      name: 'ClickPass',
+      label: 'Enter your ClickPass username',
+      url: 'http://clickpass.com/public/{username}'
+    },
     google_profile: {
       name: 'Google_Profile',
       label: 'Enter your Google Profile username',
