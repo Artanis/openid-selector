@@ -81,6 +81,7 @@ var providers = $.extend({}, providers_large, providers_small);
 
 var openid = {
 
+	demo: false,
 	cookie_expires: 6*30,	// 6 months.
 	cookie_name: 'openid_provider',
 	cookie_path: '/',
@@ -161,6 +162,10 @@ var openid = {
     		url = url.replace('{username}', $('#openid_username').val());
     		openid.setOpenIdUrl(url);
     	}
+    	if(openid.demo) {
+    		alert("In client demo mode. Normally would have submitted OpenID:\r\n" + document.getElementById(openid.input_id).value);
+    		return false;
+    	}
     	return true;
     },
     setOpenIdUrl: function (url) {
@@ -225,5 +230,8 @@ var openid = {
 		input_area.append(html);
 
 		$('#'+id).focus();
+    },
+    setDemoMode: function (demoMode) {
+    	this.demo = demoMode;
     }
 };
