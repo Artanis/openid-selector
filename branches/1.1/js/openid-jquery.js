@@ -90,6 +90,7 @@ var openid = {
 	
 	input_id: null,
 	provider_url: null,
+	provider_id: null,
 	
     init: function(input_id) {
         
@@ -140,18 +141,17 @@ var openid = {
 		this.highlight(box_id);
 		this.setCookie(box_id);
 		
+		this.provider_id = box_id;
+		this.provider_url = provider['url'];
+		
 		// prompt user for input?
 		if (provider['label']) {
-			
 			this.useInputBox(provider);
-			this.provider_url = provider['url'];
-			
 		} else {
-			
-			this.setOpenIdUrl(provider['url']);
+			$('#openid_input_area').empty();
 			if (! onload) {
 				$('#openid_form').submit();
-			}	
+			}
 		}
     },
     /* Sign-in button click */
@@ -170,8 +170,8 @@ var openid = {
     },
     setOpenIdUrl: function (url) {
     
-    	var hidden = $('#'+this.input_id);
-    	if (hidden.length > 0) {
+    	var hidden = document.getElementById(this.input_id);
+    	if (hidden != null) {
     		hidden.value = url;
     	} else {
     		$('#openid_form').append('<input type="hidden" id="' + this.input_id + '" name="' + this.input_id + '" value="'+url+'"/>');
