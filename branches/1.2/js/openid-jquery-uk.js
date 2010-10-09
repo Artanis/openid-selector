@@ -35,7 +35,7 @@ var providers_small = {
       url: null
     },
     livejournal: {
-        name: 'Живой Журнал',
+        name: 'Живий Журнал',
         label: 'Введіть ваше ім\'я в Живому Журналі.',
         url: 'http://{username}.livejournal.com/'
     },
