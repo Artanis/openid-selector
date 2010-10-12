@@ -37,4 +37,18 @@ while (exec.Status == 0) {
 	WScript.Sleep(100);
 }
 
+cmd = imagemagick + 'montage';
+i = 0;
+for (provider_id in providers_large) {
+	cmd += ' images/' + provider_id + '.gif';
+	i++;
+}
+cmd += ' -tile ' + i + 'x1 -geometry 100x60>+0+0 images/openid-large-' + lang + '.png';
+
+var shell = new ActiveXObject('WScript.Shell');
+var exec = shell.Exec(cmd);
+while (exec.Status == 0) {
+	WScript.Sleep(100);
+}
+
 WScript.Echo("done");

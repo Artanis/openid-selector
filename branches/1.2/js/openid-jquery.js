@@ -36,14 +36,14 @@ var openid = {
         // add box for each provider
         for (id in providers_large) {
         
-           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', i++));
+           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', -(i++)*100, 0));
         }
         if (providers_small) {
         	openid_btns.append('<br/>');
         	
 	        for (id in providers_small) {
 	        
-	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', i++));
+	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', -(i++)*24, 0));
 	        }
         }
         
@@ -54,16 +54,10 @@ var openid = {
         	this.signin(box_id, true);
         }  
     },
-    getBoxHTML: function(box_id, provider, box_size, index) {
-        if (box_size == 'small')
+    getBoxHTML: function(box_id, provider, box_size, x, y) {
         return '<a title="'+provider["name"]+'" href="javascript:openid.signin(\'' + box_id + '\');"' +
-    			' style="background: #FFF url(' + this.img_path + 'openid-small-' + this.lang + '.png); background-position: ' + (-index*24) + 'px ' + '0px"' +
+    			' style="background: #FFF url(' + this.img_path + 'openid-' + box_size + '-' + this.lang + '.png); background-position: ' + x + 'px ' + y + 'px"' +
     			' class="' + box_id + ' openid_' + box_size + '_btn"></a>';
-
-        return '<a title="'+provider["name"]+'" href="javascript: openid.signin(\''+ box_id +'\');"' +
-        		' style="background: #FFF url(' + this.img_path + box_id + '.gif) no-repeat center center" ' + 
-        		'class="' + box_id + ' openid_' + box_size + '_btn"></a>';    
-    
     },
     /* Provider image click */
     signin: function(box_id, onload) {
