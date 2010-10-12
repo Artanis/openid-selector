@@ -40,7 +40,7 @@ while (exec.Status == 0) {
 cmd = imagemagick + 'montage';
 i = 0;
 for (provider_id in providers_large) {
-	cmd += ' images/' + provider_id + '.gif';
+	cmd += ' images.large/' + provider_id + '.gif';
 	i++;
 }
 cmd += ' -tile ' + i + 'x1 -geometry 100x60>+0+0 images/openid-large-' + lang + '.png';
