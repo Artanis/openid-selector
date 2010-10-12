@@ -21,6 +21,7 @@ var openid = {
 	input_id: null,
 	provider_url: null,
 	provider_id: null,
+	all_small: false,
 	
     init: function(input_id) {
         providers = $.extend({}, providers_large, providers_small);
@@ -35,7 +36,9 @@ var openid = {
         var i = 0;
         // add box for each provider
         for (id in providers_large) {
-        
+        	if (this.all_small) {
+        		openid_btns.append(this.getBoxHTML(id, providers_large[id], 'small', -(i++)*24, -60));	
+        	} else
            	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', -(i++)*100, 0));
         }
         if (providers_small) {
