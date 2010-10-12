@@ -22,6 +22,7 @@ var openid = {
 	provider_url: null,
 	provider_id: null,
 	all_small: false,
+	no_imagemap: false,
 	
     init: function(input_id) {
         providers = $.extend({}, providers_large, providers_small);
@@ -37,16 +38,16 @@ var openid = {
         // add box for each provider
         for (id in providers_large) {
         	if (this.all_small) {
-        		openid_btns.append(this.getBoxHTML(id, providers_large[id], 'small', -(i++)*24, -60));	
+        		openid_btns.append(this.getBoxHTML(id, providers_large[id], 'small', this.no_imagemap ? null : i++));	
         	} else
-           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', -(i++)*100, 0));
+           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', this.no_imagemap ? null : i++));
         }
         if (providers_small) {
         	openid_btns.append('<br/>');
         	
 	        for (id in providers_small) {
 	        
-	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', -(i++)*24, -60));
+	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', this.no_imagemap ? null : i++));
 	        }
         }
         
@@ -57,7 +58,15 @@ var openid = {
         	this.signin(box_id, true);
         }  
     },
-    getBoxHTML: function(box_id, provider, box_size, x, y) {
+    getBoxHTML: function(box_id, provider, box_size, index) {
+   	  	if (index == null) {
+    	  var image_ext = box_size == 'small' ? '.ico.png' : '.gif';
+  	      return '<a title="'+provider["name"]+'" href="javascript: openid.signin(\''+ box_id +'\');"' +
+    			' style="background: #FFF url(' + this.img_path + '../images.' + box_size + '/' + box_id + image_ext + ') no-repeat center center" ' + 
+    			'class="' + box_id + ' openid_' + box_size + '_btn"></a>';    
+    	}
+   	  	var x = box_size == 'small' ? -index*24 : -index*100;
+   	  	var y = box_size == 'small' ? -60 : 0;
         return '<a title="'+provider["name"]+'" href="javascript:openid.signin(\'' + box_id + '\');"' +
     			' style="background: #FFF url(' + this.img_path + 'openid-providers-' + this.lang + '.png); background-position: ' + x + 'px ' + y + 'px"' +
     			' class="' + box_id + ' openid_' + box_size + '_btn"></a>';
