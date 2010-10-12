@@ -87,3 +87,7 @@ var providers_small = {
       url: 'http://www.google.com/profiles/{username}'
     }
 };
+
+openid.lang = 'en';
+openid.demo_text = 'In client demo mode. Normally would have submitted OpenID:';
+openid.signin_text = 'Sign-In';

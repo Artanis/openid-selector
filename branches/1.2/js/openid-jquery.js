@@ -10,14 +10,14 @@ var providers;
 var openid = {
 
 	demo: false,
-	demo_text: 'In client demo mode. Normally would have submitted OpenID:',
+	demo_text: null,
 	cookie_expires: 6*30,	// 6 months.
 	cookie_name: 'openid_provider',
 	cookie_path: '/',
 	
 	img_path: 'images/',
-	
-	signin_text: 'Sign-In',
+	lang: null,
+	signin_text: null,
 	input_id: null,
 	provider_url: null,
 	provider_id: null,
@@ -32,17 +32,18 @@ var openid = {
         $('#openid_choice').show();
         $('#openid_input_area').empty();
         
+        var i = 0;
         // add box for each provider
         for (id in providers_large) {
         
-           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', '.gif'));
+           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', i++));
         }
         if (providers_small) {
         	openid_btns.append('<br/>');
         	
 	        for (id in providers_small) {
 	        
-	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', '.ico.gif'));
+	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', i++));
 	        }
         }
         
@@ -53,10 +54,14 @@ var openid = {
         	this.signin(box_id, true);
         }  
     },
-    getBoxHTML: function(box_id, provider, box_size, image_ext) {
-            
+    getBoxHTML: function(box_id, provider, box_size, index) {
+        if (box_size == 'small')
+        return '<a title="'+provider["name"]+'" href="javascript:openid.signin(\'' + box_id + '\');"' +
+    			' style="background: #FFF url(' + this.img_path + 'openid-small-' + this.lang + '.png); background-position: ' + (-index*24) + 'px ' + '0px"' +
+    			' class="' + box_id + ' openid_' + box_size + '_btn"></a>';
+
         return '<a title="'+provider["name"]+'" href="javascript: openid.signin(\''+ box_id +'\');"' +
-        		' style="background: #FFF url(' + this.img_path + box_id + image_ext+') no-repeat center center" ' + 
+        		' style="background: #FFF url(' + this.img_path + box_id + '.gif) no-repeat center center" ' + 
         		'class="' + box_id + ' openid_' + box_size + '_btn"></a>';    
     
     },
