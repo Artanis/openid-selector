@@ -19,6 +19,7 @@ try {
 var openid = {};
 eval(s);
 
+// generate small montage
 var cmd = imagemagick + 'montage';
 var i = 0;
 for (provider_id in providers_large) {
@@ -29,7 +30,8 @@ for (provider_id in providers_small) {
 	cmd += ' images.small/' + provider_id + '.ico.png';
 	i++;
 }
-cmd += ' -tile ' + i + 'x1 -geometry 16x16+4+4 images/openid-small-' + lang + '.png';
+var small = fso.GetTempName() + '.bmp';
+cmd += ' -tile ' + i + 'x1 -geometry 16x16+4+4 ' + small;
 
 var shell = new ActiveXObject('WScript.Shell');
 var exec = shell.Exec(cmd);
@@ -37,13 +39,15 @@ while (exec.Status == 0) {
 	WScript.Sleep(100);
 }
 
+// generate large montage
 cmd = imagemagick + 'montage';
 i = 0;
 for (provider_id in providers_large) {
 	cmd += ' images.large/' + provider_id + '.gif';
 	i++;
 }
-cmd += ' -tile ' + i + 'x1 -geometry 100x60>+0+0 images/openid-large-' + lang + '.png';
+var large = fso.GetTempName() + '.bmp';
+cmd += ' -tile ' + i + 'x1 -geometry 100x60>+0+0 ' + large;
 
 var shell = new ActiveXObject('WScript.Shell');
 var exec = shell.Exec(cmd);
@@ -51,4 +55,15 @@ while (exec.Status == 0) {
 	WScript.Sleep(100);
 }
 
+// generate final montage
+var cmd = imagemagick + 'convert ' + large + ' ' + small + ' -append images/openid-providers-' + lang + '.png';
+
+var shell = new ActiveXObject('WScript.Shell');
+var exec = shell.Exec(cmd);
+while (exec.Status == 0) {
+	WScript.Sleep(100);
+}
+
+fso.DeleteFile(large);
+fso.DeleteFile(small);
 WScript.Echo("done");

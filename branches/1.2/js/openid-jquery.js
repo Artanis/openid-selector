@@ -43,7 +43,7 @@ var openid = {
         	
 	        for (id in providers_small) {
 	        
-	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', -(i++)*24, 0));
+	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', -(i++)*24, -60));
 	        }
         }
         
@@ -56,7 +56,7 @@ var openid = {
     },
     getBoxHTML: function(box_id, provider, box_size, x, y) {
         return '<a title="'+provider["name"]+'" href="javascript:openid.signin(\'' + box_id + '\');"' +
-    			' style="background: #FFF url(' + this.img_path + 'openid-' + box_size + '-' + this.lang + '.png); background-position: ' + x + 'px ' + y + 'px"' +
+    			' style="background: #FFF url(' + this.img_path + 'openid-providers-' + this.lang + '.png); background-position: ' + x + 'px ' + y + 'px"' +
     			' class="' + box_id + ' openid_' + box_size + '_btn"></a>';
     },
     /* Provider image click */
