@@ -22,11 +22,11 @@ eval(s);
 var cmd = imagemagick + 'montage';
 var i = 0;
 for (provider_id in providers_large) {
-	cmd += ' images0/' + provider_id + '.ico.png';
+	cmd += ' images.small/' + provider_id + '.ico.png';
 	i++;
 }
 for (provider_id in providers_small) {
-	cmd += ' images0/' + provider_id + '.ico.png';
+	cmd += ' images.small/' + provider_id + '.ico.png';
 	i++;
 }
 cmd += ' -tile ' + i + 'x1 -geometry 16x16+4+4 images/openid-small-' + lang + '.png';
