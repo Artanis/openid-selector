@@ -1,3 +1,11 @@
+function exec(cmd) {
+	var shell = new ActiveXObject('WScript.Shell');
+	var exec = shell.Exec(cmd);
+	while (exec.Status == 0) {
+		WScript.Sleep(100);
+	}
+}
+
 var imagemagick = 'C:/Program Files/ImageMagick-6.6.4-Q16/';
 
 var lang = 'en';
@@ -32,12 +40,7 @@ for (provider_id in providers_small) {
 }
 var small = fso.GetTempName() + '.bmp';
 cmd += ' -tile ' + i + 'x1 -geometry 16x16+4+4 ' + small;
-
-var shell = new ActiveXObject('WScript.Shell');
-var exec = shell.Exec(cmd);
-while (exec.Status == 0) {
-	WScript.Sleep(100);
-}
+exec(cmd);
 
 // generate large montage
 cmd = imagemagick + 'montage';
@@ -48,21 +51,11 @@ for (provider_id in providers_large) {
 }
 var large = fso.GetTempName() + '.bmp';
 cmd += ' -tile ' + i + 'x1 -geometry 100x60>+0+0 ' + large;
-
-var shell = new ActiveXObject('WScript.Shell');
-var exec = shell.Exec(cmd);
-while (exec.Status == 0) {
-	WScript.Sleep(100);
-}
+exec(cmd);
 
 // generate final montage
 var cmd = imagemagick + 'convert ' + large + ' ' + small + ' -append images/openid-providers-' + lang + '.png';
-
-var shell = new ActiveXObject('WScript.Shell');
-var exec = shell.Exec(cmd);
-while (exec.Status == 0) {
-	WScript.Sleep(100);
-}
+exec(cmd);
 
 fso.DeleteFile(large);
 fso.DeleteFile(small);
