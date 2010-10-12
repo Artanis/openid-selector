@@ -60,7 +60,7 @@ var openid = {
     },
     getBoxHTML: function(box_id, provider, box_size, index) {
    	  	if (index == null) {
-    	  var image_ext = box_size == 'small' ? '.ico.png' : '.gif';
+    	  var image_ext = box_size == 'small' ? '.ico.gif' : '.gif';
   	      return '<a title="'+provider["name"]+'" href="javascript: openid.signin(\''+ box_id +'\');"' +
     			' style="background: #FFF url(' + this.img_path + '../images.' + box_size + '/' + box_id + image_ext + ') no-repeat center center" ' + 
     			'class="' + box_id + ' openid_' + box_size + '_btn"></a>';    
