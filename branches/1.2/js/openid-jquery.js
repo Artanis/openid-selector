@@ -8,7 +8,7 @@ This code is licenced under the New BSD License.
 var providers;
 
 var openid = {
-
+	version: '1.2',
 	demo: false,
 	demo_text: null,
 	cookie_expires: 6*30,	// 6 months.
