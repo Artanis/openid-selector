@@ -6,7 +6,7 @@ function exec(cmd) {
 	}
 }
 
-var imagemagick = 'C:/Program Files/ImageMagick-6.6.4-Q16/';
+var imagemagick = 'C:/Program Files/ImageMagick-6.6.5-Q16/';
 
 var lang = 'en';
 if (WScript.Arguments.length == 0) {
