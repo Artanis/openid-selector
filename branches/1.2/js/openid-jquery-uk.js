@@ -60,7 +60,7 @@ var providers_small = {
       url: 'http://{username}.pip.verisignlabs.com/'
     },
     google_profile: {
-      name: 'Профиль Google',
+      name: 'Профіль Google',
       label: 'Введіть ваше ім\'я на Google Profile',
       url: 'http://www.google.com/profiles/{username}'
     }
