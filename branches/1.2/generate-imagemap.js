@@ -1,3 +1,10 @@
+/*
+	Simple OpenID Plugin
+	http://code.google.com/p/openid-selector/
+	
+	This code is licenced under the New BSD License.
+*/
+
 function exec(cmd) {
 	var shell = new ActiveXObject('WScript.Shell');
 	var exec = shell.Exec(cmd);
