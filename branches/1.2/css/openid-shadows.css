@@ -27,18 +27,9 @@
 }
 
 #openid_highlight {
-	margin: -3px;
 	padding: 3px;
 	background-color: #FFFCC9;
-	border-radius: 5px;	
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
 	float: left;
-}
-
-.openid_small_btn:hover,
-.openid_large_btn:hover {
-	border-color: #bbb;
 }
 
 .openid_large_btn {
@@ -61,7 +52,7 @@
 	-webkit-box-shadow: 2px 2px 4px #ddd;
 }
 
-#openid_highlight .openid_large_btn {
+.openid_large_btn:hover {
 	margin: 4px 0 0 6px;
 	border: 2px solid #999;
 	box-shadow: none;
@@ -89,7 +80,7 @@
 	-webkit-box-shadow: 2px 2px 4px #ddd;
 }
 
-#openid_highlight .openid_small_btn {
+.openid_small_btn:hover {
 	margin: 4px 0 0 6px;
 	border: 2px solid #999;
 	box-shadow: none;
