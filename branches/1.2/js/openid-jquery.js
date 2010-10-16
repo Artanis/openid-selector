@@ -54,7 +54,7 @@ var openid = {
         $('#openid_form').submit(this.submit);
         
         var box_id = this.readCookie();
-        if (providers[box_id]) {
+        if (box_id) {
         	this.signin(box_id, true);
         }  
     },
