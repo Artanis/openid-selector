@@ -9,10 +9,6 @@
 	width: 580px;
 }
 
-#openid_form fieldset {
-	padding: 2px;
-}
-
 #openid_form legend {
 	font-weight: bold;
 }
@@ -31,7 +27,6 @@
 }
 
 #openid_highlight {
-	margin: -3px;
 	padding: 3px;
 	background-color: #FFFCC9;
 	float: left;
