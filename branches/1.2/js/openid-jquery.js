@@ -60,9 +60,21 @@ var openid = {
     },
     getBoxHTML: function(box_id, provider, box_size, index) {
    	  	if (index == null) {
-    	  var image_ext = box_size == 'small' ? '.ico.gif' : '.gif';
+   	  	  var image;
+   	  	  var style;
+   	  	  if (provider['image'] && provider['image']) {
+   	  		  image = provider['image'];
+   	  		  if (box_size == 'small') {
+   	   	  		  style = 'background-size: 16px 16px;'
+   	  		  } else {
+   	  			  style= '';
+   	  		  }
+   	  	  } else {
+   	    	  image = this.img_path + '../images.' + box_size + '/' + box_id + (box_size == 'small' ? '.ico.gif' : '.gif');
+   	    	  style = '';
+   	  	  }
   	      return '<a title="'+provider["name"]+'" href="javascript: openid.signin(\''+ box_id +'\');"' +
-    			' style="background: #FFF url(' + this.img_path + '../images.' + box_size + '/' + box_id + image_ext + ') no-repeat center center" ' + 
+    			' style="background: #FFF url(' + image + ') no-repeat center center; ' + style + '" ' + 
     			'class="' + box_id + ' openid_' + box_size + '_btn"></a>';    
     	}
    	  	var x = box_size == 'small' ? -index*24 : -index*100;
