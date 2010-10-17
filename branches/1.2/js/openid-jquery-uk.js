@@ -70,3 +70,4 @@ var providers_small = {
 openid.lang = 'uk';
 openid.demo_text = 'В демонстраційному режимі на клієнті. Насправді пройшов би сабміт наступного OpenID:';
 openid.signin_text = 'Ввійти';
+openid.image_title = 'ввійти через {provider}';

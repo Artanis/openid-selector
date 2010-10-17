@@ -92,3 +92,4 @@ var providers_small = {
 openid.lang = 'en';
 openid.demo_text = 'In client demo mode. Normally would have submitted OpenID:';
 openid.signin_text = 'Sign-In';
+openid.image_title = 'log in with {provider}';
