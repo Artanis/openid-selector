@@ -22,7 +22,7 @@ var openid = {
 	provider_url: null,
 	provider_id: null,
 	all_small: false,
-	no_imagemap: false,
+	no_sprite: false,
 	
     init: function(input_id) {
         providers = $.extend({}, providers_large, providers_small);
@@ -38,16 +38,16 @@ var openid = {
         // add box for each provider
         for (id in providers_large) {
         	if (this.all_small) {
-        		openid_btns.append(this.getBoxHTML(id, providers_large[id], 'small', this.no_imagemap ? null : i++));	
+        		openid_btns.append(this.getBoxHTML(id, providers_large[id], 'small', this.no_sprite ? null : i++));	
         	} else
-           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', this.no_imagemap ? null : i++));
+           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', this.no_sprite ? null : i++));
         }
         if (providers_small) {
         	openid_btns.append('<br/>');
         	
 	        for (id in providers_small) {
 	        
-	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', this.no_imagemap ? null : i++));
+	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', this.no_sprite ? null : i++));
 	        }
         }
         
