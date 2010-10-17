@@ -28,6 +28,7 @@ var providers_large = {
 		url : 'http://{username}.myopenid.com/'
 	}
 };
+
 var providers_small = {
 	openid : {
 		name : 'OpenID',

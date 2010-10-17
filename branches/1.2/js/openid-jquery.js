@@ -8,7 +8,7 @@ This code is licenced under the New BSD License.
 var providers;
 
 var openid = {
-	version: '1.2',
+	version: '1.2', // version constant
 	demo: false,
 	demo_text: null,
 	cookie_expires: 6*30,	// 6 months.
@@ -16,13 +16,13 @@ var openid = {
 	cookie_path: '/',
 	
 	img_path: 'images/',
-	lang: null,
-	signin_text: null,
+	lang: null, // language, is set in openid-jquery-<lang>.js
+	signin_text: null, // text on submit button on the form
 	input_id: null,
 	provider_url: null,
 	provider_id: null,
-	all_small: false,
-	no_sprite: false,
+	all_small: false, // output large providers w/ small icons
+	no_sprite: false, // don't use sprite image
 	
     init: function(input_id) {
         providers = $.extend({}, providers_large, providers_small);
@@ -38,16 +38,16 @@ var openid = {
         // add box for each provider
         for (id in providers_large) {
         	if (this.all_small) {
-        		openid_btns.append(this.getBoxHTML(id, providers_large[id], 'small', this.no_sprite ? null : i++));	
+        		openid_btns.append(this.getBoxHTML(id, providers_large[id], 'small', i++));	
         	} else
-           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', this.no_sprite ? null : i++));
+           	openid_btns.append(this.getBoxHTML(id, providers_large[id], 'large', i++));
         }
         if (providers_small) {
         	openid_btns.append('<br/>');
         	
 	        for (id in providers_small) {
 	        
-	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', this.no_sprite ? null : i++));
+	           	openid_btns.append(this.getBoxHTML(id, providers_small[id], 'small', i++));
 	        }
         }
         
@@ -59,10 +59,10 @@ var openid = {
         }  
     },
     getBoxHTML: function(box_id, provider, box_size, index) {
-   	  	if (index == null) {
+   	  	if (this.no_sprite || index == null) {
    	  	  var image;
    	  	  var style;
-   	  	  if (provider['image'] && provider['image']) {
+   	  	  if (provider['image']) {
    	  		  image = provider['image'];
    	  		  if (box_size == 'small') {
    	   	  		  style = 'background-size: 16px 16px;'
