@@ -60,29 +60,17 @@ var openid = {
         }  
     },
     getBoxHTML: function(box_id, provider, box_size, index) {
-   	  	if (this.no_sprite || index == null) {
-   	  	  var image;
-   	  	  var style;
-   	  	  if (provider['image']) {
-   	  		  image = provider['image'];
-   	  		  if (box_size == 'small') {
-   	   	  		  style = 'background-size: 16px 16px;'
-   	  		  } else {
-   	  			  style= '';
-   	  		  }
-   	  	  } else {
-   	    	  image = this.img_path + '../images.' + box_size + '/' + box_id + (box_size == 'small' ? '.ico.gif' : '.gif');
-   	    	  style = '';
-   	  	  }
+    	if (this.no_sprite) {
+    	  var image_ext = box_size == 'small' ? '.ico.gif' : '.gif';
   	      return '<a title="'+this.image_title.replace('{provider}', provider["name"])+'" href="javascript:openid.signin(\''+ box_id +'\');"' +
-    			' style="background: #FFF url(' + image + ') no-repeat center center; ' + style + '" ' + 
+    			' style="background: #FFF url(' + this.img_path + '../images.' + box_size + '/' + box_id + image_ext + ') no-repeat center center" ' + 
     			'class="' + box_id + ' openid_' + box_size + '_btn"></a>';    
     	}
    	  	var x = box_size == 'small' ? -index*24 : -index*100;
    	  	var y = box_size == 'small' ? -60 : 0;
         return '<a title="'+this.image_title.replace('{provider}', provider["name"])+'" href="javascript:openid.signin(\'' + box_id + '\');"' +
-    			' style="background: #FFF url(' + this.img_path + 'openid-providers-' + this.lang + '.png); background-position: ' + x + 'px ' + y + 'px"' +
-    			' class="' + box_id + ' openid_' + box_size + '_btn"></a>';
+    			' style="background: #FFF url(' + this.img_path + 'openid-providers-' + this.lang + '.png); background-position: ' + x + 'px ' + y + 'px" ' +
+    			'class="' + box_id + ' openid_' + box_size + '_btn"></a>';
     },
     /* Provider image click */
     signin: function(box_id, onload) {
