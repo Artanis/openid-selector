@@ -70,4 +70,4 @@ var providers_small = {
 openid.lang = 'ru';
 openid.demo_text = 'В демонстрационном режиме на клиенте. В действительности произошел бы сабмит следующего OpenID:';
 openid.signin_text = 'Войти';
-openid.image_title = 'войти через {provider}';
+openid.image_title = 'войти c {provider}';
