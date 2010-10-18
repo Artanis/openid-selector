@@ -14,15 +14,15 @@ var providers_large = {
 		name : 'Yahoo',
 		url : 'http://me.yahoo.com/'
 	},
-	myopenid : {
-		name : 'MyOpenID',
-		label : 'Enter your MyOpenID username.',
-		url : 'http://{username}.myopenid.com/'
-	},
 	aol : {
 		name : 'AOL',
 		label : 'Enter your AOL screenname.',
 		url : 'http://openid.aol.com/{username}'
+	},
+	myopenid : {
+		name : 'MyOpenID',
+		label : 'Enter your MyOpenID username.',
+		url : 'http://{username}.myopenid.com/'
 	},
 	openid : {
 		name : 'OpenID',
