@@ -1,204 +1,269 @@
-/*
-	Simple OpenID Plugin
-	http://code.google.com/p/openid-selector/
-	
-	This code is licensed under the New BSD License.
-*/
+/**
+ * Simple OpenID Plugin
+ * 
+ * @see 	http://code.google.com/p/openid-selector/
+ * @licence New BSD License <http://www.opensource.org/licenses/bsd-license.php>
+ */
 
-var providers;
+/**
+ * @class OpenIdProviders
+ */
+var OpenIdProviders = new Class({
+
+	all: {},
+
+	large: {
+	    google: {
+	        name: 'Google',
+	        url: 'https://www.google.com/accounts/o8/id'
+	    },
+	    yahoo: {
+	        name: 'Yahoo',      
+	        url: 'http://me.yahoo.com/'
+	    },    
+	    aol: {
+	        name: 'AOL',     
+	        label: 'Enter your AOL screenname.',
+	        url: 'http://openid.aol.com/{username}/'
+	    },
+	    openid: {
+	        name: 'OpenID',     
+	        label: 'Enter your OpenID.',
+	        url: null
+	    }
+	},
+
+	small: {
+		myopenid: {
+	        name: 'MyOpenID',
+	        label: 'Enter your MyOpenID username.',
+	        url: 'http://{username}.myopenid.com/'
+	    },
+	    livejournal: {
+	        name: 'LiveJournal',
+	        label: 'Enter your Livejournal username.',
+	        url: 'http://{username}.livejournal.com/'
+	    },
+	    flickr: {
+	        name: 'Flickr',        
+	        label: 'Enter your Flickr username.',
+	        url: 'http://flickr.com/{username}/'
+	    },
+	    technorati: {
+	        name: 'Technorati',
+	        label: 'Enter your Technorati username.',
+	        url: 'http://technorati.com/people/technorati/{username}/'
+	    },
+	    wordpress: {
+	        name: 'Wordpress',
+	        label: 'Enter your Wordpress.com username.',
+	        url: 'http://{username}.wordpress.com/'
+	    },
+	    blogger: {
+	        name: 'Blogger',
+	        label: 'Your Blogger account',
+	        url: 'http://{username}.blogspot.com/'
+	    },
+	    verisign: {
+	        name: 'Verisign',
+	        label: 'Your Verisign username',
+	        url: 'http://{username}.pip.verisignlabs.com/'
+	    },
+	    vidoop: {
+	        name: 'Vidoop',
+	        label: 'Your Vidoop username',
+	        url: 'http://{username}.myvidoop.com/'
+	    },
+	    verisign: {
+	        name: 'Verisign',
+	        label: 'Your Verisign username',
+	        url: 'http://{username}.pip.verisignlabs.com/'
+	    },
+	    claimid: {
+	        name: 'ClaimID',
+	        label: 'Your ClaimID username',
+	        url: 'http://claimid.com/{username}'
+	    }
+	},
+
+	initialize: function(){
+		this.all = $merge(this.large, this.small);
+	}
+});
 
 /**
  * @class OpenIdSelector
  */
 var OpenIdSelector = new Class({
-	version : '1.3', // version constant
-	demo : false,
-	demo_text : null,
-	cookie_expires : 6 * 30, // 6 months.
-	cookie_name : 'openid_provider',
-	cookie_path : '/',
 
-	img_path : 'images/',
-	locale : null, // is set in openid-jquery-<locale>.js
-	sprite : null, // usually equals to locale, is set in
-	// openid-jquery-<locale>.js
-	signin_text : null, // text on submit button on the form
-	input_id : null,
-	provider_url : null,
-	provider_id : null,
-	all_small : false, // output large providers w/ small icons
-	no_sprite : false, // don't use sprite image
-	image_title : '{provider}', // for image title
+	cookie_expires: 6*30, // 6 months.
+    cookie_name: 'openid_provider',
+    cookie_path: '/',
 
-	/**
-	 * Class constructor
-	 * 
-	 * @return {Void}
-	 */
-	initialize : function(input_id) {
-		providers = $.extend({}, providers_large, providers_small);
-		var openid_btns = $('openid_btns');
-		this.input_id = input_id;
-		$('openid_choice').setStyle('display', 'block');
-		$('openid_input_area').empty();
-		var i = 0;
-		// add box for each provider
-		for (id in providers_large) {
-			box = this.getBoxHTML(providers_large[id], 'large', '.gif');
-			box.inject(openid_btns);
-		}
-		if (providers_small) {
-			openid_btns.grab(new Element('br'));
-			for (id in providers_small) {
-				box = this.getBoxHTML(providers_small[id], 'small', '.ico');
-				box.inject(openid_btns);
-			}
-		}
-		$('openid_form').addEvent('submit', this.submit.bind(this));
-		var box_id = this.readCookie();
-		if (box_id) {
-			this.signin(box_id, true);
-		}
-	},
+    img_path: 'images/',
 
-	/**
-	 * @return {Element}
-	 */
-	getBoxHTML : function(provider, box_size, image_ext) {
-		var box_id = provider.name.toLowerCase();
-		var openid = this;
-		return new Element('a', {
-			'href' : "javascript:void(0);",
-			'title' : provider.name,
-			'class' : box_id + ' openid_' + box_size + '_btn',
-			'styles' : {
-				'display' : 'block',
-				'background' : '#fff url(' + this.img_path + box_id + image_ext + ') no-repeat center center'
-			},
-			'events' : {
-				'click' : openid.signin.pass(box_id, openid)
-			}
-		});
-	},
+    input_id: null,
+    provider_url: null,
 
-	/**
-	 * Provider image click
-	 * 
-	 * @return {Void}
-	 */
-	signin : function(box_id, onload) {
-		var provider = providers[box_id];
-		if (!provider) {
-			return;
-		}
-		this.highlight(box_id);
-		this.setCookie(box_id);
-		this.provider_id = box_id;
-		this.provider_url = provider['url'];
-		// prompt user for input?
-		if (provider['label']) {
-			this.useInputBox(provider);
-		} else {
-			this.setOpenIdUrl(provider.url);
-			if (!onload) {
-				$('openid_form').submit();
-			}
-		}
-	},
+    providers: null,
 
-	/**
-	 * Sign-in button click
-	 * 
-	 * @return {Boolean}
-	 */
-	submit : function() {
-		var url = this.provider_url;
-		if (url) {
-			url = url.substitute({
-				'username' : $('openid_username').get('value')
-			});
-			this.setOpenIdUrl(url);
-		}
-		if (this.demo) {
-			alert(this.demo_text + "\r\n" + document.getElementById(this.input_id).value);
-			return false;
-		}
-		if (url.indexOf("javascript:") == 0) {
-			url = url.substr("javascript:".length);
-			eval(url);
-			return false;
-		}
-		return true;
-	},
+    /**
+     * Class constructor
+     * 
+     * @return {Void}
+     */
+    initialize: function(input_id) {
 
-	/**
-	 * @return {Void}
-	 */
-	setOpenIdUrl : function(url) {
-		var hidden = $(this.input_id);
-		if (hidden) {
-			hidden.set('value', url);
-		} else {
-			$('openid_form').grab(new Element('input', {
-				'type' : 'hidden',
-				'id' : this.input_id,
-				'name' : this.input_id,
-				'value' : url
-			}));
-		}
-	},
+        var openid_btns = $('openid_btns');
 
-	/**
-	 * @return {Void}
-	 */
-	highlight : function(box_id) {
-		// remove previous highlight.
-		var highlight = $('openid_highlight');
-		if (highlight) {
-			$('openid_highlight').getFirst('a').replaces(highlight);
-	}
-		// add new highlight.
-		new Element('div', {
-			'id' : 'openid_highlight'
-		}).wraps($$('.' + box_id)[0]);
-	},
+        this.input_id  = input_id;
+        this.providers = new OpenIdProviders();
 
-	setCookie : function(value) {
-		Cookie.write(this.cookie_name, value, {
-			duration : this.cookie_expires,
-			path : this.cookie_path
-		});
-	},
+        $('openid_choice').setStyle('display', 'block');
+        $('openid_input_area').empty();
 
-	readCookie : function() {
-		return Cookie.read(this.cookie_name)
-	},
+        // add box for each provider
+        for (id in this.providers.large) {
+        	box = this.getBoxHTML(this.providers.large[id], 'large', '.gif');
+        	box.inject(openid_btns);
+        }
 
-	/**
-	 * @return {Void}
-	 */
-	useInputBox : function(provider) {
-		var input_area = $('openid_input_area');
-		var html = '';
-		var id = 'openid_username';
-		var value = '';
-		var label = provider['label'];
-		var style = '';
-		if (label) {
-			html = '<p>' + label + '</p>';
-		}
-		if (provider['name'] == 'OpenID') {
-			id = this.input_id;
-			value = 'http://';
-			style = 'background:#FFF url(' + this.img_path + 'openid-inputicon.gif) no-repeat scroll 0 50%; padding-left:18px;';
-		}
-		html += '<input id="' + id + '" type="text" style="' + style + '" name="' + id + '" value="' + value + '" />'
-				+ '<input id="openid_submit" type="submit" value="' + this.signin_text + '"/>';
-		input_area.set('html', html);
-		$(id).focus();
-	},
+        if (this.providers.small) {
+            openid_btns.grab(new Element('br'));
+            for (id in this.providers.small) {
+                box = this.getBoxHTML(this.providers.small[id], 'small', '.ico');
+                box.inject(openid_btns);
+            }
+        }
 
-	setDemoMode : function(demoMode) {
-		this.demo = demoMode;
-	}
+        $('openid_form').addEvent('submit', this.submit.bind(this));
+
+        var box_id = Cookie.read(this.cookie_name);
+        if (box_id !== null) this.signin(box_id, true);
+    },
+
+    /**
+     * @return {Element}
+     */
+    getBoxHTML: function(provider, box_size, image_ext){
+        var box_id = provider.name.toLowerCase();
+        var openid = this;
+        return  new Element('a', {
+        	'href':  "javascript:void(0);",
+        	'title': provider.name,
+            'class': box_id + ' openid_' + box_size + '_btn',
+            'styles': {
+        		'display': 'block',
+                'background': '#fff url(' + this.img_path + box_id + image_ext + ') no-repeat center center'
+            },
+            'events': {
+            	'click': openid.signin.pass(box_id, openid)
+            }
+        });
+    },
+    
+    /**
+     * Provider image click
+     * 
+     * @return {Void}
+     */
+    signin: function(box_id, onload){
+
+        var provider = this.providers.all[box_id];
+        if (!provider) return;
+
+        this.highlight(box_id);
+
+        Cookie.write(this.cookie_name, box_id, {
+            duration: this.cookie_expires,
+            path: this.cookie_path
+        });
+        
+        // prompt user for input?
+        if (provider.label) {
+            this.useInputBox(provider);
+            this.provider_url = provider.url;
+        }
+
+        else {
+            this.setOpenIdUrl(provider.url);
+            if (!onload) $('openid_form').submit();
+        }
+    },
+    
+    /**
+     * Sign-in button click
+     * 
+     * @return {Boolean}
+     */
+    submit: function(){
+        var url = this.provider_url; 
+        if (url) {
+            url = url.substitute({ 'username': $('openid_username').get('value') });
+            this.setOpenIdUrl(url);
+        }
+        return true;
+    },
+
+    /**
+     * @return {Void}
+     */
+    setOpenIdUrl: function(url){
+
+    	var hidden = $(this.input_id);
+
+        if (hidden) {
+            hidden.set('value', url);
+        }
+        else {
+        	$('openid_form').grab(new Element('input', {
+            	'type':  'hidden',
+            	'id':    this.input_id,
+            	'name':  this.input_id,
+            	'value': url
+        	}));
+        }
+    },
+
+    /**
+     * @return {Void}
+     */
+    highlight: function(box_id){
+        // remove previous highlight.
+        var highlight = $('openid_highlight');
+        if (highlight)
+            $('openid_highlight').getFirst('a').replaces(highlight);
+        // add new highlight.
+        new Element('div', { 'id': 'openid_highlight' }).wraps($$('.' + box_id)[0]);
+    },
+
+    /**
+     * @return {Void}
+     */
+    useInputBox: function(provider){
+
+        var input_area = $('openid_input_area');
+
+        var html  = '';
+        var id    = 'openid_username';
+        var value = '';
+        var label = provider['label'];
+        var style = '';
+
+        if (label)
+        	html  = '<p>' + label + '</p>';
+
+        if (provider['name'] == 'OpenID') {
+            id    = this.input_id;
+            value = 'http://';
+            style = 'background: #fff url(' + this.img_path + 'openid-inputicon.gif) no-repeat scroll 0 50%; padding-left:18px;';
+        }
+
+        html += '<input id="'+id+'" type="text" style="'+style+'" name="'+id+'" value="'+value+'" />' + 
+                '<input id="openid_submit" type="submit" value="Sign-In"/>';
+
+        input_area.set('html', html);
+
+        $(id).focus();
+    }
 });
