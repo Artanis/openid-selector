@@ -1,0 +1,15 @@
+<project default="build">
+	<property name="name" value="openid-selector-1.3" />
+
+	<target name="clean">
+		<delete dir="build" />
+	</target>
+
+	<target name="build" depends="clean">
+		<mkdir dir="build" />
+		<zip zipfile="build/${name}.zip">
+			<zipfileset dir="trunk" prefix="openid-selector"/>
+		</zip>
+	</target>
+
+</project>
