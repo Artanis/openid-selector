@@ -50,7 +50,7 @@ i=0
 SMALLCMD=""
 LARGECMD=""
 
-./remcomments.sed < ${JSFILE} | sed -n '/providers_large/,/;/p' | sed -n '/: {/p' | sed 's/.*\t\(.*\) : {/\1/' > tmp.txt
+./remcomments.sed < ${JSFILE} | sed -n '/providers_large/,/;/p' | sed -n '/: {/p' | sed 's/.*\t\(.*\) : {/\1/' | sed 's/://g;s/{//g;' | tr -d '[:blank:]' > tmp.txt
 while read a
 do
   SMALLCMD="${SMALLCMD} images.small/${a}.ico.png"
@@ -59,7 +59,7 @@ do
 done < tmp.txt
 LARGECMD="${LARGECMD} -tile ${i}x1 -geometry 100x60>+0+0 large.bmp"
 
-./remcomments.sed < ${JSFILE} | sed -n '/providers_small/,/;/p' | sed -n '/: {/p' | sed 's/.*\t\(.*\) : {/\1/' > tmp.txt
+./remcomments.sed < ${JSFILE} | sed -n '/providers_small/,/;/p' | sed -n '/: {/p' | sed 's/.*\t\(.*\) : {/\1/' | sed 's/://g;s/{//g;' | tr -d '[:blank:]' > tmp.txt
 while read a
 do
   SMALLCMD="${SMALLCMD} images.small/${a}.ico.png"
